@@ -30,6 +30,11 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# Docker prebuilt context (temporary)
+.docker-prebuilt-context
+# test-standalone.mjs isolated copy
+.test-standalone-copy
+
 # vercel
 .vercel
 

@@ -9,35 +9,38 @@ import { SimpleSelect } from '@/app/components/base/select'
 import Toast from '@/app/components/base/toast'
 import Tooltip from '@/app/components/base/tooltip'
 import { LICENSE_LINK } from '@/constants/link'
-import { languages, LanguagesSupported } from '@/i18n-config/language'
+// import { languages, LanguagesSupported } from '@/i18n-config/language'
 import { useOneMoreStep } from '@/service/use-common'
 import { timezones } from '@/utils/timezone'
 import Input from '../components/base/input'
 
+// 仅允许使用中文，界面语言固定为 zh-Hans
+const FIXED_INTERFACE_LANGUAGE = 'zh-Hans'
+
 type IState = {
   invitation_code: string
-  interface_language: string
+  // interface_language: string
   timezone: string
 }
 
 type IAction
   = | { type: 'failed', payload: null }
     | { type: 'invitation_code', value: string }
-    | { type: 'interface_language', value: string }
+    // | { type: 'interface_language', value: string }
     | { type: 'timezone', value: string }
 
 const reducer: Reducer<IState, IAction> = (state: IState, action: IAction) => {
   switch (action.type) {
     case 'invitation_code':
       return { ...state, invitation_code: action.value }
-    case 'interface_language':
-      return { ...state, interface_language: action.value }
+    // case 'interface_language':
+    //   return { ...state, interface_language: action.value }
     case 'timezone':
       return { ...state, timezone: action.value }
     case 'failed':
       return {
         invitation_code: '',
-        interface_language: 'en-US',
+        // interface_language: 'en-US',
         timezone: 'Asia/Shanghai',
       }
     default:
@@ -52,7 +55,7 @@ const OneMoreStep = () => {
 
   const [state, dispatch] = useReducer(reducer, {
     invitation_code: searchParams.get('invitation_code') || '',
-    interface_language: 'en-US',
+    // interface_language: 'en-US',
     timezone: 'Asia/Shanghai',
   })
   const { mutateAsync: submitOneMoreStep, isPending } = useOneMoreStep()
@@ -63,7 +66,7 @@ const OneMoreStep = () => {
     try {
       await submitOneMoreStep({
         invitation_code: state.invitation_code,
-        interface_language: state.interface_language,
+        interface_language: FIXED_INTERFACE_LANGUAGE,
         timezone: state.timezone,
       })
       router.push('/apps')
@@ -112,7 +115,8 @@ const OneMoreStep = () => {
               />
             </div>
           </div>
-          <div className="mb-5">
+          {/* 界面语言配置已注释，仅允许使用中文 */}
+          {/* <div className="mb-5">
             <label htmlFor="name" className="system-md-semibold my-2 text-text-secondary">
               {t('interfaceLanguage', { ns: 'login' })}
             </label>
@@ -125,7 +129,7 @@ const OneMoreStep = () => {
                 }}
               />
             </div>
-          </div>
+          </div> */}
           <div className="mb-4">
             <label htmlFor="timezone" className="system-md-semibold text-text-tertiary">
               {t('timezone', { ns: 'login' })}

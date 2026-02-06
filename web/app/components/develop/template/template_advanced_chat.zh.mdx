@@ -1292,7 +1292,7 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
 
     <Properties>
       <Property name='message_id' type='str' key='message_id'>
-        Dify 生成的文本消息，那么直接传递生成的message-id 即可，后台会通过 message_id 查找相应的内容直接合成语音信息。如果同时传 message_id 和 text，优先使用 message_id。
+        AI 生成的文本消息，那么直接传递生成的message-id 即可，后台会通过 message_id 查找相应的内容直接合成语音信息。如果同时传 message_id 和 text，优先使用 message_id。
       </Property>
       <Property name='text' type='str' key='text'>
         语音生成内容。如果没有传 message-id的话，则会使用这个字段的内容
@@ -1313,7 +1313,7 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
 --header 'Content-Type: application/json' \\
 --data-raw '{
     "message_id": "5ad4cb98-f0c7-4085-b384-88c403be6290",
-    "text": "Hello Dify",
+    "text": "Hello AI",
     "user": "abc-123",
 }'`}
     />
@@ -1361,7 +1361,7 @@ import { Row, Col, Properties, Property, Heading, SubProperty } from '../md.tsx'
         "tag2"
       ],
       "mode": "advanced-chat",
-      "author_name": "Dify"
+      "author_name": "AI"
     }
     ```
     </CodeGroup>
@@ -1633,7 +1633,7 @@ ___
         {
           "id": "69d48372-ad81-4c75-9c46-2ce197b4d402",
           "question": "What is your name?",
-          "answer": "I am Dify.",
+          "answer": "I am AI.",
           "hit_count": 0,
           "created_at": 1735625869
         }
@@ -1677,7 +1677,7 @@ ___
 --header 'Content-Type: application/json' \\
 --data-raw '{
     "question": "What is your name?",
-    "answer": "I am Dify."
+    "answer": "I am AI."
 }'`}
     />
 
@@ -1686,7 +1686,7 @@ ___
     {
       "id": "69d48372-ad81-4c75-9c46-2ce197b4d402",
       "question": "What is your name?",
-      "answer": "I am Dify.",
+      "answer": "I am AI.",
       "hit_count": 0,
       "created_at": 1735625869
     }
@@ -1727,7 +1727,7 @@ ___
 --header 'Content-Type: application/json' \\
 --data-raw '{
     "question": "What is your name?",
-    "answer": "I am Dify."
+    "answer": "I am AI."
 }'`}
     />
 
@@ -1736,7 +1736,7 @@ ___
     {
       "id": "69d48372-ad81-4c75-9c46-2ce197b4d402",
       "question": "What is your name?",
-      "answer": "I am Dify.",
+      "answer": "I am AI.",
       "hit_count": 0,
       "created_at": 1735625869
     }

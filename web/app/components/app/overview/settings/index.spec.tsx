@@ -96,7 +96,7 @@ const mockAppInfo = {
     description: 'A description',
     chat_color_theme: '#123456',
     chat_color_theme_inverted: true,
-    copyright: '© Dify',
+    copyright: '© CurrentCAD',
     privacy_policy: '',
     custom_disclaimer: 'Disclaimer',
     default_language: 'en-US',

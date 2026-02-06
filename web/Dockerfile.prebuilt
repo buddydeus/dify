@@ -1,0 +1,30 @@
+# Prebuilt image: 基于官方镜像，仅替换 .next 编译产物与 server.js。
+# node_modules / pm2 / entrypoint / 用户配置等全部复用基础镜像，无需处理。
+#
+# 使用方式:
+#   cd web && pnpm install && pnpm build:docker
+#   pnpm run build:docker:image [image-name]
+#
+# 构建上下文由 scripts/prepare-docker-prebuilt.mjs 准备，仅包含:
+#   server.js (.next/standalone/server.js)
+#   .next/    (.next/standalone/.next/ + .next/static/)
+#   public/
+
+FROM langgenius/dify-web:latest AS builder
+
+USER root
+
+WORKDIR /app/web
+
+# 删除旧的编译产物
+RUN rm -rf /app/web/.next
+
+# 复制宿主机新编译产物（由 prepare-docker-prebuilt.mjs 准备的 context）
+COPY --chown=dify:dify server.js /app/web/server.js
+COPY --chown=dify:dify .next /app/web/.next
+COPY --chown=dify:dify public /app/web/public
+
+ARG COMMIT_SHA
+ENV COMMIT_SHA=${COMMIT_SHA}
+
+USER dify
