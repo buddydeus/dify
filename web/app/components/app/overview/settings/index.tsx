@@ -25,7 +25,7 @@ import Tooltip from '@/app/components/base/tooltip'
 import { ACCOUNT_SETTING_TAB } from '@/app/components/header/account-setting/constants'
 import { useModalContext } from '@/context/modal-context'
 import { useProviderContext } from '@/context/provider-context'
-import { languages } from '@/i18n-config/language'
+// import { languages } from '@/i18n-config/language'
 import { AppModeEnum } from '@/types/app'
 import { cn } from '@/utils/classnames'
 
@@ -79,7 +79,7 @@ const SettingsModal: FC<ISettingsModalProps> = ({
     copyright,
     privacy_policy,
     custom_disclaimer,
-    default_language,
+    // default_language,
     show_workflow_steps,
     use_icon_as_answer_icon,
   } = appInfo.site
@@ -96,7 +96,9 @@ const SettingsModal: FC<ISettingsModalProps> = ({
     use_icon_as_answer_icon,
     enable_sso: appInfo.enable_sso,
   })
-  const [language, setLanguage] = useState(default_language)
+  // 仅允许使用中文，界面语言固定为 zh-Hans
+  const FIXED_DEFAULT_LANGUAGE = 'zh-Hans' as Language
+  // const [language, setLanguage] = useState(default_language)
   const [saveLoading, setSaveLoading] = useState(false)
   const { t } = useTranslation()
 
@@ -131,11 +133,11 @@ const SettingsModal: FC<ISettingsModalProps> = ({
       use_icon_as_answer_icon,
       enable_sso: appInfo.enable_sso,
     })
-    setLanguage(default_language)
+    // setLanguage(default_language)
     setAppIcon(icon_type === 'image'
       ? { type: 'image', url: icon_url!, fileId: icon }
       : { type: 'emoji', icon, background: icon_background! })
-  }, [appInfo, chat_color_theme, chat_color_theme_inverted, copyright, custom_disclaimer, default_language, description, icon, icon_background, icon_type, icon_url, privacy_policy, show_workflow_steps, title, use_icon_as_answer_icon])
+  }, [appInfo, chat_color_theme, chat_color_theme_inverted, copyright, custom_disclaimer, description, icon, icon_background, icon_type, icon_url, privacy_policy, show_workflow_steps, title, use_icon_as_answer_icon])
 
   const onHide = () => {
     onClose()
@@ -181,7 +183,7 @@ const SettingsModal: FC<ISettingsModalProps> = ({
     const params = {
       title: inputInfo.title,
       description: inputInfo.desc,
-      default_language: language,
+      default_language: FIXED_DEFAULT_LANGUAGE,
       chat_color_theme: inputInfo.chatColorTheme,
       chat_color_theme_inverted: inputInfo.chatColorThemeInverted,
       prompt_public: false,
@@ -288,8 +290,9 @@ const SettingsModal: FC<ISettingsModalProps> = ({
               <p className="body-xs-regular pb-0.5 text-text-tertiary">{t('answerIcon.description', { ns: 'app' })}</p>
             </div>
           )}
+          {/* 界面语言配置已注释，仅允许使用中文 */}
           {/* language */}
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <div className={cn('system-sm-semibold grow py-1 text-text-secondary')}>{t(`${prefixSettings}.language`, { ns: 'appOverview' })}</div>
             <SimpleSelect
               wrapperClassName="w-[200px]"
@@ -298,7 +301,7 @@ const SettingsModal: FC<ISettingsModalProps> = ({
               onSelect={item => setLanguage(item.value as Language)}
               notClearable
             />
-          </div>
+          </div> */}
           {/* theme color */}
           {isChat && (
             <div className="flex items-center">

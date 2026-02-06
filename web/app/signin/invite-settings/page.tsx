@@ -14,7 +14,7 @@ import Toast from '@/app/components/base/toast'
 import { LICENSE_LINK } from '@/constants/link'
 import { useGlobalPublicStore } from '@/context/global-public-context'
 import { setLocaleOnClient } from '@/i18n-config'
-import { languages, LanguagesSupported } from '@/i18n-config/language'
+// import { languages, LanguagesSupported } from '@/i18n-config/language'
 import { activateMember } from '@/service/common'
 import { useInvitationCheck } from '@/service/use-common'
 import { timezones } from '@/utils/timezone'
@@ -27,7 +27,9 @@ export default function InviteSettingsPage() {
   const searchParams = useSearchParams()
   const token = decodeURIComponent(searchParams.get('invite_token') as string)
   const [name, setName] = useState('')
-  const [language, setLanguage] = useState(LanguagesSupported[0])
+  // 仅允许使用中文，界面语言固定为 zh-Hans
+  // const [language, setLanguage] = useState(LanguagesSupported[0])
+  const FIXED_INTERFACE_LANGUAGE = 'zh-Hans' as Locale
   const [timezone, setTimezone] = useState(() => Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Los_Angeles')
 
   const checkParams = {
@@ -49,13 +51,13 @@ export default function InviteSettingsPage() {
         body: {
           token,
           name,
-          interface_language: language,
+          interface_language: FIXED_INTERFACE_LANGUAGE,
           timezone,
         },
       })
       if (res.result === 'success') {
         // Tokens are now stored in cookies by the backend
-        await setLocaleOnClient(language, false)
+        await setLocaleOnClient(FIXED_INTERFACE_LANGUAGE, false)
         const redirectUrl = resolvePostLoginRedirect(searchParams)
         router.replace(redirectUrl || '/apps')
       }
@@ -63,7 +65,7 @@ export default function InviteSettingsPage() {
     catch {
       recheck()
     }
-  }, [language, name, recheck, timezone, token, router, t])
+  }, [name, recheck, timezone, token, router, t])
 
   if (!checkRes)
     return <Loading />
@@ -113,7 +115,8 @@ export default function InviteSettingsPage() {
             />
           </div>
         </div>
-        <div className="mb-5">
+        {/* 界面语言配置已注释，仅允许使用中文 */}
+        {/* <div className="mb-5">
           <label htmlFor="name" className="system-md-semibold my-2 text-text-secondary">
             {t('interfaceLanguage', { ns: 'login' })}
           </label>
@@ -126,7 +129,7 @@ export default function InviteSettingsPage() {
               }}
             />
           </div>
-        </div>
+        </div> */}
         {/* timezone */}
         <div className="mb-5">
           <label htmlFor="timezone" className="system-md-semibold text-text-secondary">

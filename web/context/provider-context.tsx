@@ -165,8 +165,9 @@ export const ProviderContextProvider = ({
         setModelLoadBalancingEnabled(true)
       if (data.dataset_operator_enabled)
         setDatasetOperatorEnabled(true)
-      if (data.webapp_copyright_enabled)
-        setWebappCopyrightEnabled(true)
+      // 去掉页面上版权说明：不再根据后端开启版权
+      // if (data.webapp_copyright_enabled)
+      //   setWebappCopyrightEnabled(true)
       if (data.workspace_members)
         setLicenseLimit({ workspace_members: data.workspace_members })
       if (data.is_allow_transfer_workspace)

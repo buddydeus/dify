@@ -30,6 +30,7 @@
     "dev:inspect": "next dev --inspect",
     "build": "next build",
     "build:docker": "next build && node scripts/optimize-standalone.js",
+    "build:image": "next build && node scripts/prepare-docker-prebuilt.mjs",
     "start": "node ./scripts/copy-and-start.mjs",
     "lint": "eslint --cache --concurrency=\"auto\"",
     "lint:ci": "eslint --cache --concurrency 3",
