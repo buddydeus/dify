@@ -818,9 +818,7 @@ services:
 
   # Frontend web application.
   web:
-    build:
-      context: ../web
-      dockerfile: Dockerfile
+    image: swr.cn-south-1.myhuaweicloud.com/hw36423330/dify-web:jinglong
     restart: always
     environment:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}
