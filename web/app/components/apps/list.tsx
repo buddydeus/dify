@@ -276,9 +276,11 @@ const List: FC<Props> = ({
             <span className="system-xs-regular">{t('newApp.dropDSLToCreateApp', { ns: 'app' })}</span>
           </div>
         )}
+        {/* 去掉 apps 页面底部 参与社区 部分
         {!systemFeatures.branding.enabled && (
           <Footer />
         )}
+        */}
         <CheckModal />
         <div ref={anchorRef} className="h-0"> </div>
         {showTagManagementModal && (

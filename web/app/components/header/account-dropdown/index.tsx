@@ -134,6 +134,7 @@ export default function AppSelector() {
                   {!systemFeatures.branding.enabled && (
                     <>
                       <div className="p-1">
+                        {/* 去掉 查看帮助文档 按钮
                         <MenuItem>
                           <Link
                             className={cn(itemClassName, 'group justify-between', 'data-[active]:bg-state-base-hover')}
@@ -146,10 +147,12 @@ export default function AppSelector() {
                             <RiArrowRightUpLine className="size-[14px] shrink-0 text-text-tertiary" />
                           </Link>
                         </MenuItem>
+                        */}
                         <Support closeAccountDropdown={close} />
                         {IS_CLOUD_EDITION && isCurrentWorkspaceOwner && <Compliance />}
                       </div>
                       <div className="p-1">
+                        {/* 去掉 路线图 按钮
                         <MenuItem>
                           <Link
                             className={cn(itemClassName, 'group justify-between', 'data-[active]:bg-state-base-hover')}
@@ -162,6 +165,8 @@ export default function AppSelector() {
                             <RiArrowRightUpLine className="size-[14px] shrink-0 text-text-tertiary" />
                           </Link>
                         </MenuItem>
+                        */}
+                        {/* 去掉 GitHub 按钮
                         <MenuItem>
                           <Link
                             className={cn(itemClassName, 'group justify-between', 'data-[active]:bg-state-base-hover')}
@@ -177,26 +182,28 @@ export default function AppSelector() {
                             </div>
                           </Link>
                         </MenuItem>
-                        {
-                          document?.body?.getAttribute('data-public-site-about') !== 'hide' && (
-                            <MenuItem>
-                              <div
-                                className={cn(itemClassName, 'justify-between', 'data-[active]:bg-state-base-hover')}
-                                onClick={() => setAboutVisible(true)}
-                              >
-                                <RiInformation2Line className="size-4 shrink-0 text-text-tertiary" />
-                                <div className="system-md-regular grow px-1 text-text-secondary">{t('userProfile.about', { ns: 'common' })}</div>
-                                <div className="flex shrink-0 items-center">
-                                  <div className="system-xs-regular mr-2 text-text-tertiary">{langGeniusVersionInfo.current_version}</div>
-                                  <Indicator color={langGeniusVersionInfo.current_version === langGeniusVersionInfo.latest_version ? 'green' : 'orange'} />
-                                </div>
+                        */}
+                        {/* 去掉 关于 按钮
+                        document?.body?.getAttribute('data-public-site-about') !== 'hide' && (
+                          <MenuItem>
+                            <div
+                              className={cn(itemClassName, 'justify-between', 'data-[active]:bg-state-base-hover')}
+                              onClick={() => setAboutVisible(true)}
+                            >
+                              <RiInformation2Line className="size-4 shrink-0 text-text-tertiary" />
+                              <div className="system-md-regular grow px-1 text-text-secondary">{t('userProfile.about', { ns: 'common' })}</div>
+                              <div className="flex shrink-0 items-center">
+                                <div className="system-xs-regular mr-2 text-text-tertiary">{langGeniusVersionInfo.current_version}</div>
+                                <Indicator color={langGeniusVersionInfo.current_version === langGeniusVersionInfo.latest_version ? 'green' : 'orange'} />
                               </div>
-                            </MenuItem>
-                          )
-                        }
+                            </div>
+                          </MenuItem>
+                        )
+                        */}
                       </div>
                     </>
                   )}
+                  {/* 去掉主题切换，仅浅色模式
                   <MenuItem disabled>
                     <div className="p-1">
                       <div className={cn(itemClassName, 'hover:bg-transparent')}>
@@ -206,6 +213,7 @@ export default function AppSelector() {
                       </div>
                     </div>
                   </MenuItem>
+                  */}
                   <MenuItem>
                     <div className="p-1" onClick={() => handleLogout()}>
                       <div
