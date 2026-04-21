@@ -7,8 +7,10 @@ import { basePath } from '@/utils/var'
 export type LogoStyle = 'default' | 'monochromeWhite'
 
 export const logoPathMap: Record<LogoStyle, string> = {
+  // default: "/logo/logo.jpg",
+  // monochromeWhite: "/logo/logo.jpg",
   default: '/logo/logo.svg',
-  monochromeWhite: '/logo/logo-monochrome-white.svg',
+  monochromeWhite: '/logo/logo.svg',
 }
 
 export type LogoSize = 'large' | 'medium' | 'small'
@@ -33,14 +35,18 @@ const DifyLogo: FC<DifyLogoProps> = ({
   alt = 'Dify logo',
 }) => {
   const { theme } = useTheme()
-  const themedStyle = (theme === 'dark' && style === 'default') ? 'monochromeWhite' : style
+  const themedStyle
+    = theme === 'dark' && style === 'default' ? 'monochromeWhite' : style
 
   return (
-    <img
-      src={`${basePath}${logoPathMap[themedStyle]}`}
-      className={cn('block object-contain', logoSizeMap[size], className)}
-      alt={alt}
-    />
+    <>
+      {/* 原 Dify 字样: alt="Dify logo" */}
+      <img
+        src={`${basePath}${logoPathMap[themedStyle]}`}
+        className={cn('block object-contain', logoSizeMap[size], className)}
+        alt="logo"
+      />
+    </>
   )
 }
 

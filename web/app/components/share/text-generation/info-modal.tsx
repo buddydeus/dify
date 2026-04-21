@@ -43,7 +43,7 @@ const InfoModal = ({
           </div>
           <div className="system-xs-regular text-text-tertiary">
             {/* copyright */}
-            {data?.copyright && (
+            {/* {data?.copyright && (
               <div>
                 Copyright ©
                 {' '}
@@ -52,7 +52,7 @@ const InfoModal = ({
                 {data?.copyright}
                 . All Rights Reserved.
               </div>
-            )}
+            )} */}
             {data?.custom_disclaimer && (
               <div className="mt-2">{data.custom_disclaimer}</div>
             )}

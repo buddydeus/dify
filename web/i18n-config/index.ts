@@ -5,8 +5,9 @@ import { LOCALE_COOKIE_NAME } from '@/config'
 import { changeLanguage } from '@/i18n-config/client'
 import { LanguagesSupported } from '@/i18n-config/language'
 
+// 仅允许使用中文，默认界面语言改为 zh-Hans
 export const i18n = {
-  defaultLocale: 'en-US',
+  defaultLocale: 'zh-Hans' as const, // 原 'en-US'
   locales: LanguagesSupported,
 } as const
 

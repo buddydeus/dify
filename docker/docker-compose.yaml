@@ -372,7 +372,7 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:1.14.2
+    image: swr.cn-south-1.myhuaweicloud.com/hw36423330/dify-web:jinglong
     restart: always
     env_file:
       - path: ./envs/core-services/web.env

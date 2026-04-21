@@ -43,7 +43,7 @@ export const slashAction: ActionItem = {
 const registerSlashCommands = (deps: Record<string, any>) => {
   // Register command handlers to the registry system with their respective dependencies
   slashCommandRegistry.register(themeCommand, { setTheme: deps.setTheme })
-  slashCommandRegistry.register(languageCommand, { setLocale: deps.setLocale })
+  // slashCommandRegistry.register(languageCommand, { setLocale: deps.setLocale })
   slashCommandRegistry.register(forumCommand, {})
   slashCommandRegistry.register(docsCommand, {})
   slashCommandRegistry.register(communityCommand, {})
@@ -55,7 +55,7 @@ const registerSlashCommands = (deps: Record<string, any>) => {
 const unregisterSlashCommands = () => {
   // Remove command handlers from registry system (automatically calls each command's unregister method)
   slashCommandRegistry.unregister('theme')
-  slashCommandRegistry.unregister('language')
+  // slashCommandRegistry.unregister('language')
   slashCommandRegistry.unregister('forum')
   slashCommandRegistry.unregister('docs')
   slashCommandRegistry.unregister('community')

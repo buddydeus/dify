@@ -116,9 +116,11 @@ export const ProviderContextProvider = ({
         setModelLoadBalancingEnabled(true)
       if (data.dataset_operator_enabled)
         setDatasetOperatorEnabled(true)
-      if (data.webapp_copyright_enabled)
-        setWebappCopyrightEnabled(true)
-      setLicenseLimit({ workspace_members: resolveMemberInviteLimit(data) })
+      // 去掉页面上版权说明：不再根据后端开启版权
+      // if (data.webapp_copyright_enabled)
+      //   setWebappCopyrightEnabled(true)
+      if (data.workspace_members)
+        setLicenseLimit({ workspace_members: data.workspace_members })
       if (data.is_allow_transfer_workspace)
         setIsAllowTransferWorkspace(data.is_allow_transfer_workspace)
       if (data.knowledge_pipeline?.publish_enabled)
@@ -184,7 +186,6 @@ export const ProviderContextProvider = ({
       supportRetrievalMethods: supportRetrievalMethods?.retrieval_method || [],
       plan,
       isFetchedPlan,
-      isFetchedPlanInfo,
       enableBilling,
       onPlanInfoChanged: fetchPlan,
       enableReplaceWebAppLogo,

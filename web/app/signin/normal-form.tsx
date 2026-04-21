@@ -241,7 +241,7 @@ const NormalForm = () => {
               </div>
             </>
           )}
-          {!systemFeatures.branding.enabled && (
+          {/* {!systemFeatures.branding.enabled && (
             <>
               <div className="mt-2 block w-full system-xs-regular text-text-tertiary">
                 {t('tosDesc', { ns: 'login' })}
@@ -277,7 +277,7 @@ const NormalForm = () => {
                 </div>
               )}
             </>
-          )}
+          )} */}
         </div>
       </div>
     </>

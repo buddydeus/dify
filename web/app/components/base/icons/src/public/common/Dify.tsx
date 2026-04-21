@@ -15,6 +15,7 @@ const Icon = (
   },
 ) => <IconBase {...props} ref={ref} data={data as IconData} />
 
-Icon.displayName = 'Dify'
+// Icon.displayName = 'Dify'
+Icon.displayName = 'AI'
 
 export default Icon

@@ -1,20 +1,7 @@
 'use client'
-import type { FC } from 'react'
-import type { AppIconSelection } from '@/app/components/base/app-icon-picker'
-import type { AppDetailResponse } from '@/models/app'
-import type { AppIconType, AppSSO, Language } from '@/types/app'
-import { Button } from '@langgenius/dify-ui/button'
-import { cn } from '@langgenius/dify-ui/cn'
-import { Dialog, DialogCloseButton, DialogContent, DialogTitle } from '@langgenius/dify-ui/dialog'
-import { Select, SelectContent, SelectItem, SelectItemIndicator, SelectItemText, SelectTrigger } from '@langgenius/dify-ui/select'
-import { Switch } from '@langgenius/dify-ui/switch'
-import { Textarea } from '@langgenius/dify-ui/textarea'
-import { toast } from '@langgenius/dify-ui/toast'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@langgenius/dify-ui/tooltip'
-import * as React from 'react'
-import { useCallback, useState } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import ActionButton from '@/app/components/base/action-button'
 import AppIcon from '@/app/components/base/app-icon'
+import type { AppIconSelection } from '@/app/components/base/app-icon-picker'
 import AppIconPicker from '@/app/components/base/app-icon-picker'
 import Divider from '@/app/components/base/divider'
 import Input from '@/app/components/base/input'
@@ -23,8 +10,23 @@ import { ACCOUNT_SETTING_TAB } from '@/app/components/header/account-setting/con
 import { useModalContext } from '@/context/modal-context'
 import { useProviderContext } from '@/context/provider-context'
 import { languages } from '@/i18n-config/language'
+import type { AppDetailResponse } from '@/models/app'
 import Link from '@/next/link'
+import type { AppIconType, AppSSO, Language } from '@/types/app'
 import { AppModeEnum } from '@/types/app'
+import { Button } from '@langgenius/dify-ui/button'
+import { cn } from '@langgenius/dify-ui/cn'
+import { Dialog, DialogCloseButton, DialogContent, DialogTitle } from '@langgenius/dify-ui/dialog'
+import { Select, SelectContent, SelectItem, SelectItemIndicator, SelectItemText, SelectTrigger } from '@langgenius/dify-ui/select'
+import { Switch } from '@langgenius/dify-ui/switch'
+import { Textarea } from '@langgenius/dify-ui/textarea'
+import { toast } from '@langgenius/dify-ui/toast'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@langgenius/dify-ui/tooltip'
+import { RiArrowRightSLine, RiCloseLine } from '@remixicon/react'
+import type { FC } from 'react'
+import * as React from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
 type ISettingsModalProps = {
   isChat: boolean
@@ -70,6 +72,7 @@ const createInputInfo = (appInfo: ISettingsModalProps['appInfo']) => {
     copyright,
     privacy_policy,
     custom_disclaimer,
+    // default_language,
     show_workflow_steps,
     use_icon_as_answer_icon,
   } = appInfo.site
@@ -130,6 +133,10 @@ const SettingsModal: FC<ISettingsModalProps> = ({
   const settingsResetKey = getSettingsResetKey(appInfo)
   const [inputInfo, setInputInfo] = useState(nextInputInfo)
   const [language, setLanguage] = useState(default_language)
+  
+  // 仅允许使用中文，界面语言固定为 zh-Hans
+  const FIXED_DEFAULT_LANGUAGE = 'zh-Hans' as Language
+  // const [language, setLanguage] = useState(default_language)
   const [saveLoading, setSaveLoading] = useState(false)
   const { t } = useTranslation()
 
@@ -209,7 +216,7 @@ const SettingsModal: FC<ISettingsModalProps> = ({
     const params = {
       title: inputInfo.title,
       description: inputInfo.desc,
-      default_language: language,
+      default_language: FIXED_DEFAULT_LANGUAGE,
       chat_color_theme: inputInfo.chatColorTheme,
       chat_color_theme_inverted: inputInfo.chatColorThemeInverted,
       prompt_public: false,
@@ -250,7 +257,7 @@ const SettingsModal: FC<ISettingsModalProps> = ({
 
   return (
     <>
-      <Dialog open={isShow} onOpenChange={open => !open && onHide()}>
+      <Dialog open={isShow} onOpenChange={(open: boolean) => !open && onHide()}>
         <DialogContent className="flex max-h-[calc(100dvh-2rem)] w-[520px] flex-col overflow-hidden! p-0!">
           {/* header */}
           <div className="shrink-0 pt-5 pr-5 pb-3 pl-6">
@@ -369,22 +376,53 @@ const SettingsModal: FC<ISettingsModalProps> = ({
               <p className="pb-0.5 body-xs-regular text-text-tertiary">{t(`${prefixSettings}.workflow.showDesc`, { ns: 'appOverview' })}</p>
             </div>
             {/* more settings switch */}
-            <Divider className="my-0 h-px" />
-            {!isShowMore && (
-              <div className="flex cursor-pointer items-center" onClick={() => setIsShowMore(true)}>
-                <div className="grow">
-                  <div className={cn('py-1 system-sm-semibold text-text-secondary')}>{t(`${prefixSettings}.more.entry`, { ns: 'appOverview' })}</div>
-                  <p className={cn('pb-0.5 body-xs-regular text-text-tertiary')}>
-                    {t(`${prefixSettings}.more.copyRightPlaceholder`, { ns: 'appOverview' })}
-                    {' '}
-                    &
-                    {' '}
-                    {t(`${prefixSettings}.more.privacyPolicyPlaceholder`, { ns: 'appOverview' })}
-                  </p>
+          {/* 界面语言配置已注释，仅允许使用中文 */}
+          {/* language */}
+          {/* <div className="flex items-center">
+            <div className={cn('grow py-1 system-sm-semibold text-text-secondary')}>{t(`${prefixSettings}.language`, { ns: 'appOverview' })}</div>
+            <Select
+              value={selectedLanguage?.value ?? null}
+              onValueChange={(nextValue) => {
+                if (!nextValue)
+                  return
+                setLanguage(nextValue as Language)
+              }}
+            >
+              <SelectTrigger size="large" className="w-[200px]">
+                {selectedLanguage?.name ?? t('placeholder.select', { ns: 'common' })}
+              </SelectTrigger>
+              <SelectContent popupClassName="w-(--anchor-width)">
+                {languageOptions.map(item => (
+                  <SelectItem key={item.value} value={item.value}>
+                    <SelectItemText>{item.name}</SelectItemText>
+                    <SelectItemIndicator />
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div> */}
+          {/* theme color */}
+          {isChat && (
+            <div className="flex items-center">
+              <div className="grow">
+                <div className={cn('py-1 system-sm-semibold text-text-secondary')}>{t(`${prefixSettings}.chatColorTheme`, { ns: 'appOverview' })}</div>
+                <div className="pb-0.5 body-xs-regular text-text-tertiary">{t(`${prefixSettings}.chatColorThemeDesc`, { ns: 'appOverview' })}</div>
+              </div>
+              <div className="shrink-0">
+                <Input
+                  className="mb-1 w-[200px]"
+                  value={inputInfo.chatColorTheme ?? ''}
+                  onChange={onChange('chatColorTheme')}
+                  placeholder="E.g #A020F0"
+                />
+                <div className="flex items-center justify-between">
+                  <p className={cn('body-xs-regular text-text-tertiary')}>{t(`${prefixSettings}.chatColorThemeInverted`, { ns: 'appOverview' })}</p>
+                  <Switch checked={inputInfo.chatColorThemeInverted} onCheckedChange={v => setInputInfo({ ...inputInfo, chatColorThemeInverted: v })}></Switch>
                 </div>
                 <span aria-hidden="true" className="ml-1 i-ri-arrow-right-s-line size-4 shrink-0 text-text-secondary" />
               </div>
-            )}
+            </div>
+          )}
             {/* more settings */}
             {isShowMore && (
               <>

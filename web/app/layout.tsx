@@ -43,7 +43,8 @@ const LocaleLayout = async ({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Dify" />
+        {/* 去掉 Dify 字样，仅使用浅色模式 */}
+        <meta name="apple-mobile-web-app-title" content="" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icon-192x192.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/icon-192x192.png" />
@@ -59,10 +60,11 @@ const LocaleLayout = async ({
       >
         <div className="isolate h-full">
           <JotaiProvider>
+            {/* 去掉主题切换，仅允许浅色模式 */}
             <ThemeProvider
               attribute="data-theme"
-              defaultTheme="system"
-              enableSystem
+              defaultTheme="light"
+              enableSystem={false}
               disableTransitionOnChange
               nonce={nonce}
             >

@@ -26,7 +26,7 @@ const titleClassName = `
   mb-2 system-sm-semibold text-text-secondary
 `
 export default function LanguagePage() {
-  const locale = useLocale()
+  // const locale = useLocale()
   const { userProfile, mutateUserProfile } = useAppContext()
   const [editing, setEditing] = useState(false)
   const { t } = useTranslation()
@@ -69,7 +69,8 @@ export default function LanguagePage() {
   }
   return (
     <>
-      <div className="mb-8">
+      {/* 界面语言配置已注释，仅允许使用中文 */}
+      {/* <div className="mb-8">
         <div className={titleClassName}>{t('language.displayLanguage', { ns: 'common' })}</div>
         <Select
           value={selectedLanguage?.value ?? null}
@@ -121,6 +122,7 @@ export default function LanguagePage() {
           </SelectContent>
         </Select>
       </div>
+      */}
     </>
   )
 }

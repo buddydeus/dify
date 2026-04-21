@@ -14,6 +14,9 @@ import { useOneMoreStep } from '@/service/use-common'
 import { timezones } from '@/utils/timezone'
 import Input from '../components/base/input'
 
+// 仅允许使用中文，界面语言固定为 zh-Hans
+const FIXED_INTERFACE_LANGUAGE = 'zh-Hans'
+
 type IState = {
   invitation_code: string
   interface_language: string
@@ -37,7 +40,7 @@ const reducer: Reducer<IState, IAction> = (state: IState, action: IAction) => {
     case 'failed':
       return {
         invitation_code: '',
-        interface_language: 'en-US',
+        interface_language: FIXED_INTERFACE_LANGUAGE,
         timezone: 'Asia/Shanghai',
       }
     default:
@@ -70,7 +73,7 @@ const OneMoreStep = () => {
 
   const [state, dispatch] = useReducer(reducer, {
     invitation_code: searchParams.get('invitation_code') || '',
-    interface_language: 'en-US',
+    interface_language: FIXED_INTERFACE_LANGUAGE,
     timezone: 'Asia/Shanghai',
   })
   const { mutateAsync: submitOneMoreStep, isPending } = useOneMoreStep()
@@ -95,7 +98,7 @@ const OneMoreStep = () => {
     try {
       await submitOneMoreStep({
         invitation_code: state.invitation_code,
-        interface_language: state.interface_language,
+        interface_language: FIXED_INTERFACE_LANGUAGE,
         timezone: state.timezone,
       })
       router.push('/apps')

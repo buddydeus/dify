@@ -26,6 +26,7 @@
     "analyze-component": "node ./scripts/analyze-component.js",
     "build": "next build",
     "build:vinext": "vinext build",
+    "build:image": "next build && node scripts/prepare-docker-prebuilt.mjs",
     "dev": "next dev",
     "dev:inspect": "next dev --inspect",
     "dev:proxy": "dev-proxy --config ./dev-proxy.config.ts --env-file ./.env.local",

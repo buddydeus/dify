@@ -173,8 +173,8 @@ export default function AppSelector() {
               onClick={() => setShowAccountSettingModal({ payload: ACCOUNT_SETTING_TAB.MEMBERS })}
             />
           </DropdownMenuGroup>
-          <DropdownMenuSeparator className="my-0! bg-divider-subtle" />
-          {!systemFeatures.branding.enabled && (
+          {/* <DropdownMenuSeparator className="my-0! bg-divider-subtle" /> */}
+           {/* {!systemFeatures.branding.enabled && (
             <>
               <AccountMenuSection>
                 <AccountMenuExternalItem
@@ -225,8 +225,8 @@ export default function AppSelector() {
               </AccountMenuSection>
               <DropdownMenuSeparator className="my-0! bg-divider-subtle" />
             </>
-          )}
-          <AccountMenuSection>
+          )}  */}
+          {/* <AccountMenuSection>
             <DropdownMenuItem
               closeOnClick={false}
               className="cursor-default data-highlighted:bg-transparent"
@@ -237,7 +237,7 @@ export default function AppSelector() {
                 trailing={<ThemeSwitcher />}
               />
             </DropdownMenuItem>
-          </AccountMenuSection>
+          </AccountMenuSection> */}
           <DropdownMenuSeparator className="my-0! bg-divider-subtle" />
           <AccountMenuSection>
             <AccountMenuActionItem

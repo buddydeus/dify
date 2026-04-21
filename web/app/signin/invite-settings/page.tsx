@@ -59,22 +59,13 @@ export default function InviteSettingsPage() {
   const token = decodeURIComponent(searchParams.get('invite_token') as string)
   const locale = useLocale()
   const [name, setName] = useState('')
-  const [language, setLanguage] = useState(() => getInitialLanguage(locale))
-  const [timezone, setTimezone] = useState(() => getBrowserTimezone() || 'America/Los_Angeles')
-  const selectedLanguage = LANGUAGE_OPTIONS.find(item => item.value === language)
-  const selectedTimezone = TIMEZONE_OPTIONS.find(item => item.value === timezone)
-
-  const handleLanguageChange = (nextValue: string | null) => {
-    const nextLanguage = LANGUAGE_OPTIONS.find(item => item.value === nextValue)
-    if (nextLanguage)
-      setLanguage(nextLanguage.value)
-  }
-
-  const handleTimezoneChange = (nextValue: string | null) => {
-    const nextTimezone = TIMEZONE_OPTIONS.find(item => item.value === nextValue)
-    if (nextTimezone)
-      setTimezone(nextTimezone.value)
-  }
+  // 仅允许使用中文，界面语言固定为 zh-Hans
+  // const [language, setLanguage] = useState(LanguagesSupported[0])
+  const FIXED_INTERFACE_LANGUAGE = 'zh-Hans' as Locale
+  const [timezone, setTimezone] = useState(() => Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/Los_Angeles')
+  const languageOptions: LanguageSelectOption[] = languages.filter(item => item.supported)
+  const selectedLanguage = languageOptions.find(item => item.value === FIXED_INTERFACE_LANGUAGE)
+  const selectedTimezone = timezones.find(item => item.value === timezone)
 
   const checkParams = {
     url: '/activate/check',
@@ -95,13 +86,13 @@ export default function InviteSettingsPage() {
         body: {
           token,
           name,
-          interface_language: language,
+          interface_language: FIXED_INTERFACE_LANGUAGE,
           timezone,
         },
       })
       if (res.result === 'success') {
         // Tokens are now stored in cookies by the backend
-        await setLocaleOnClient(language!, false)
+        await setLocaleOnClient(FIXED_INTERFACE_LANGUAGE, false)
         const redirectUrl = resolvePostLoginRedirect(searchParams)
         router.replace(redirectUrl || '/apps')
       }
@@ -109,7 +100,7 @@ export default function InviteSettingsPage() {
     catch {
       recheck()
     }
-  }, [language, name, recheck, timezone, token, router, t])
+  }, [name, recheck, timezone, token, router, t])
 
   if (!checkRes)
     return <Loading />
@@ -166,7 +157,7 @@ export default function InviteSettingsPage() {
           <div className="mt-1">
             <Select
               value={selectedLanguage?.value ?? null}
-              onValueChange={handleLanguageChange}
+              onValueChange={noop}
             >
               <SelectTrigger id="interface_language" size="large">
                 {selectedLanguage?.name ?? t('placeholder.select', { ns: 'common' })}
@@ -183,7 +174,7 @@ export default function InviteSettingsPage() {
           </div>
         </div>
         {/* timezone */}
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <label htmlFor="timezone" className="system-md-semibold text-text-secondary">
             {t('timezone', { ns: 'login' })}
           </label>
@@ -205,7 +196,7 @@ export default function InviteSettingsPage() {
               </SelectContent>
             </Select>
           </div>
-        </div>
+        </div> */}
         <div>
           <Button
             variant="primary"
@@ -219,7 +210,7 @@ export default function InviteSettingsPage() {
       {!systemFeatures.branding.enabled && (
         <div className="mt-2 block w-full system-xs-regular text-text-tertiary">
           {t('license.tip', { ns: 'login' })}
-      &nbsp;
+          &nbsp;
           <Link
             className="system-xs-medium text-text-accent-secondary"
             target="_blank"
